@@ -1,0 +1,293 @@
+@keyframes ball-jump {
+  30% {
+    transform: translateY(-220px);
+  }
+  60% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes baulk-move-chaos {
+  25% {
+    transform: translateY(25%) rotate(90deg);
+  }
+  50% {
+    transform: translateX(50%) rotate(180deg);
+  }
+  50% {
+    transform: translateY(75%) rotate(270deg);
+  }
+  100% {
+    transform: translateX(115%) rotate(360deg);
+  }
+}
+
+@keyframes baulk-move-straight {
+  to {
+    transform: translateX(250%) ;
+  }
+}
+
+@keyframes baulk-move-pendulum {
+  25% {
+    transform: rotate(-30deg) translateX(55%);
+  }
+  50% {
+    transform: rotate(20deg) translateX(55%);
+  }
+  100% {
+    transform: rotate(-10deg) translateX(110%);
+  }
+}
+
+@keyframes baulk-move-zigzag {
+  0% {
+    transform: translateY(-50%);
+  }
+  25% {
+    transform: translate(25%, 50%)
+  }
+  45% {
+    transform: translate(45%, -50%)
+  }
+  65% {
+    transform: translate(65%, 50%)
+  }
+  75% {
+    transform: translate(75%, -50%)
+  }
+  90% {
+    transform: translate(90%, 50%)
+  }
+  100% {
+    transform: translate(120%, -50%)
+  }
+}
+
+@keyframes baulk-move-ghost {
+  0% {
+    transform: translate(15%, -20%);
+  }
+  20% {
+    transform: translateX(45%);
+    transform: skewX((30deg));
+  }
+  35% {
+    transform: translateY(-15%);
+  }
+  50% {
+    transform: translateX(65%);
+  }
+  70% {
+    transform: translateX(-45%);
+    transform: skewX((30deg));
+  }
+  100% {
+    transform: translateX(115%);
+  }
+}
+
+@keyframes road-line-move {
+  to {
+    transform: translateX(1%);
+  }
+}
+
+@keyframes sun-beams-shine {
+  30% {
+    opacity: 0;
+    transform: translateX(-1%) ;
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0%) ;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(1%) ;
+  }
+}
+
+@keyframes sun-shines {
+  50% {
+    transform: translateX(2%);
+  }
+  100% {
+    transform: translateX(-2%);
+  }
+}
+
+@keyframes clouds-fly {
+  to {
+    transform: translateX(150%);
+  }
+}
+
+@keyframes grass-move {
+  to {
+    transform: translate(2%, -5%);
+    opacity: 0;
+  }
+}
+
+@keyframes trees-move {
+  to {
+    transform: translateX(180%);
+  }
+}
+
+body {
+  background: rgba(0, 238, 255, 0.377);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#root {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+svg {
+  background: linear-gradient(to bottom, rgb(62, 164, 233) 46% , rgb(68, 184, 68) 47%, rgb(81, 187, 81) 68%, rgb(172, 164, 64) 70%);
+  border: 2px solid lightgray;
+  width: max-content;
+  transition: 0.3s ease-in-out all;
+}
+
+.ball {
+  transition: .5s all ease-in all;
+}
+
+.ball.jump {
+  animation-name: ball-jump;
+  animation-duration: .8s;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.baulk {
+  transition: .3s all ease-in;
+  transform-box: view-box;
+}
+
+.baulk.chaos {
+  animation-name: baulk-move-chaos;
+  animation-duration: 5s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  
+  animation-fill-mode: forwards;
+}
+
+.baulk.straight {
+  animation-name: baulk-move-straight;
+  animation-duration: 5s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.baulk.pendulum {
+  animation-name: baulk-move-pendulum;
+  animation-duration: 5s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.baulk.zigzag {
+  animation-name: baulk-move-zigzag;
+  animation-duration: 5s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.baulk.ghost {
+  animation-name: baulk-move-ghost;
+  animation-duration: 6s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+#road-lines-group {
+  transform: skewX(-15deg)
+}
+
+#road-lines-group.move {
+  animation-name: road-line-move;
+  animation-duration: 5s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.sun-beam {
+  transition: .3s all ease-in;
+}
+
+#sun-beams-group {
+  animation-name: sun-beams-shine;
+  animation-duration: 5s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+#sun {
+  animation-name: sun-shines;
+  animation-duration: 3s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}
+
+#clouds {
+  animation-name: clouds-fly;
+  animation-duration: 5s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+#grass {
+  animation-name: grass-move;
+  animation-duration: 4s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+#trees {
+  animation-name: trees-move;
+  animation-duration: 8s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+#baulk-counter {
+  border-radius: 5vh;
+  background: white;
+  border: 2px solid green;
+  margin: 4% 1%;
+  padding: 1% 2%;
+  font-size: 4vh;
+  box-shadow: 0 0 1vh 1vh hsl(120, 83%, 46%, 0.5);
+}
