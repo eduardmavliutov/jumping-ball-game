@@ -142,6 +142,7 @@
 body {
   background: rgba(0, 238, 255, 0.377);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 3vh;
 }
 
 #root {
@@ -282,12 +283,20 @@ svg {
   animation-fill-mode: both;
 }
 
-#baulk-counter {
+.text-wrapper {
   border-radius: 5vh;
   background: white;
   border: 2px solid green;
-  margin: 4% 1%;
   padding: 1% 2%;
-  font-size: 4vh;
   box-shadow: 0 0 1vh 1vh hsl(120, 83%, 46%, 0.5);
+}
+
+#end-game-message {
+  display: none;
+
+}
+
+#baulk-counter {
+  margin: 4% 1%;
+  transition: 0.3s ease-in-out all;
 }

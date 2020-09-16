@@ -1,3 +1,5 @@
+import { Baulk } from './classes/baulk';
+
  export const isDotInRange = (dot, figureX, figureY, figureWidth, figureHeight) => {
   const {x, y} = dot;
   const xRange = {
@@ -11,12 +13,17 @@
   return x >= xRange.from && x <= xRange.to && y >=yRange.from && y <= yRange.to;
 }
 
-function generateBaulks(model, neededAmount = model.length) {
+export const generateBaulks = (models, neededAmount = model.length) => {
+  if (neededAmount === models.length) {
+    return models.map((model) => new Baulk(model));
+  } 
   const baulks = new Array(neededAmount);
-  baulks.forEach((baulk) => baulk = getRandomArrayElement(model));
+  for (let i = 0; i < baulks.length; i++) {
+    baulks[i] = new Baulk(getRandomArrayElement(models))
+  }
   return baulks;
 }
 
-function getRandomArrayElement(array) {
+const getRandomArrayElement = (array) => {
   return array[Math.floor(Math.random() * array.length)];
 }

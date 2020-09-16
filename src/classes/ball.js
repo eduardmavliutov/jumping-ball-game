@@ -1,7 +1,9 @@
-export class Ball {
-  constructor(ballSelector, svgContainer) {
+import { SvgFigure } from './svgfigure';
+
+export class Ball extends SvgFigure {
+  constructor(ballSelector) {
+    super();
     this.domElement = document.querySelector(ballSelector);
-    this.svgContainer = svgContainer;
     this.svgRect = this.svgContainer.getBoundingClientRect();
     this.init();
   }

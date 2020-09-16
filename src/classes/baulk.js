@@ -1,6 +1,8 @@
-export class Baulk {
-  constructor(svgContainer, animation) {
-    this.svgContainer = svgContainer;
+import { SvgFigure } from './svgfigure';
+
+export class Baulk extends SvgFigure {
+  constructor(animation) {
+    super();
     this.animation = animation;
     this.id = Math.random().toFixed(3) * 1000 + 'baulk';
     this.domElement = this.createElement();

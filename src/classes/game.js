@@ -5,8 +5,9 @@ export class Game {
     this.ball = ball;
     this.baulks = baulks;
     this.baulkCounter = document.querySelector('#baulk-counter');
-    this.currentBaulk = null;
     this.gameOver = false;
+    this.currentBaulk = null;
+    this.intervalId = null;
   }
 
   schedule(time) {
@@ -15,15 +16,15 @@ export class Game {
     });
   }
 
-  startAnimation(promise = this.schedule(0), counter = 1) {
+  startAnimation(promise = this.schedule(0)) {
     if(this.baulks.length === 0 || this.gameOver) {
       return;
     }
     promise.then(() => {
       this.currentBaulk = this.baulks.shift();
       this.currentBaulk.animate();
-      this.baulkCounter.textContent = `Obstacle №${counter}`;
-      this.startAnimation(this.schedule(this.currentBaulk.animation.duration), ++counter);
+      this.baulkCounter.innerHTML = `Obstacles left: <strong>${this.baulks.length}</strong>`;
+      this.startAnimation(this.schedule(this.currentBaulk.animation.duration));
     })
   }
 
@@ -34,6 +35,17 @@ export class Game {
 
   stop() {
     this.ball.svgContainer.style.opacity = '0';
+    this.baulkCounter.style.opacity = '0';
+    const timerId = setTimeout(() => {
+      this.ball.svgContainer.style.display = 'none';
+      this.baulkCounter.style.display = 'none;'
+      clearTimeout(timerId);
+    }, 400)
+    clearInterval(this.intervalId);
+  }
+
+  showMessage(message) {
+
   }
 
   getBallCoordinates() {
@@ -43,7 +55,6 @@ export class Game {
     const radius = width / 2;
     const xBallCenter = x - svgRectLeft + (width / 2);
     const yBallCenter = y - svgRectTop + (height / 2);
-    console.log(`x: ${xBallCenter}, y: ${yBallCenter}`); // УБРАТЬ
     const angles = [0, 45, 90, 135, 180, 225, 270, 315, 360];
     return angles.map((angle) => {
       const x = (Math.cos(angle) * radius + xBallCenter).toFixed(2);
@@ -66,7 +77,7 @@ export class Game {
   }
 
   showCoordinates() {
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       const ball = this.getBallCoordinates();
       const baulk = this.getCurrentBaulkCoordinates();
       if(ball.some((dot) => isDotInRange(dot, baulk.x, baulk.y, baulk.width, baulk.height))) {
@@ -76,5 +87,4 @@ export class Game {
       }
     }, 100)
   }
-
 }

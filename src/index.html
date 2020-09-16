@@ -7,7 +7,8 @@
 </head>
 <body>
   <div id="root">
-    <h1>Jump for your life!</h1>
+    <h1 class="text-wrapper">Jump for your life!</h1>
+    <p id="end-game-message" class="text-wrapper"></p>
     <svg id="svg-box" width="500" height="500" viewBox="0 0 500 500">
       <circle id="sun" r="10%" cx="95%" cy="5%" fill="yellow"/>
       <g id="sun-beams-group">
@@ -50,9 +51,8 @@
         <line x1="120%" y1="95%" x2="120%" y2="75%" stroke="gray" stroke-width="0.5%" class="road-line"/>
       </g>
       <circle r="5%" cx="80%" cy="80%" fill="purple" class="ball"/>
-      <!-- <rect width="15%" height="15%" x="-15%" y="80%" fill="brown" class="baulk chaos" /> -->
     </svg>
-    <p id="baulk-counter">Obstacle № 1</p>
+    <p id="baulk-counter" class="text-wrapper">Obstacles left: <strong>1</strong></p>
   </div>
 </body>
 </html>
