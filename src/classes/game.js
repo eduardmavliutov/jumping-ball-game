@@ -5,6 +5,7 @@ export class Game {
     this.ball = ball;
     this.baulks = baulks;
     this.baulkCounter = document.querySelector('#baulk-counter');
+    this.endGameMessageContainer = document.querySelector('#end-game-message');
     this.gameOver = false;
     this.currentBaulk = null;
     this.intervalId = null;
@@ -17,7 +18,11 @@ export class Game {
   }
 
   startAnimation(promise = this.schedule(0)) {
-    if(this.baulks.length === 0 || this.gameOver) {
+    if(this.baulks.length === 0) {
+      this.stop();
+      return;
+    }
+    if(this.gameOver) {
       return;
     }
     promise.then(() => {
@@ -39,13 +44,19 @@ export class Game {
     const timerId = setTimeout(() => {
       this.ball.svgContainer.style.display = 'none';
       this.baulkCounter.style.display = 'none;'
+      this.showMessage();
       clearTimeout(timerId);
     }, 400)
     clearInterval(this.intervalId);
   }
 
-  showMessage(message) {
-
+  showMessage() {
+    this.baulks.length === 0 ? 
+      this.endGameMessageContainer.textContent = 'Congratulations! You win!' :
+      this.endGameMessageContainer.textContent = 'Ooops, you lose :(';
+    this.endGameMessageContainer.style.display = 'inline';
+    this.endGameMessageContainer.style.opacity = '1';
+    this.endGameMessageContainer.style.transform = 'translateY(50%)';
   }
 
   getBallCoordinates() {

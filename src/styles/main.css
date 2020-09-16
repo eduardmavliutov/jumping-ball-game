@@ -293,7 +293,7 @@ svg {
 
 #end-game-message {
   display: none;
-
+  transition: 0.5s ease-in-out all;
 }
 
 #baulk-counter {
