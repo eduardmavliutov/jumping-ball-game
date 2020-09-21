@@ -1,18 +1,21 @@
 import { generateBaulks, isDotInRange } from '../utils';
 import { models } from '../models';
+import { Ball } from './ball';
 
 export class Game {
-  constructor(ball, baulks) {
-    this.ball = ball;
-    this.baulks = baulks;
+  constructor() {
+    this.ball = new Ball('.ball');
+    this.baulks = generateBaulks(models, 10);
     this.messageContainer = document.querySelector('#message-container');
     this.playAgainBtn = document.querySelector('#play-again-btn');
     this.playAgainBtn.addEventListener('click', this.onPlayAgainBtnClick.bind(this));
+    this.startTheGameBtn = document.querySelector('#start-the-game-btn');
+    this.startTheGameBtn.addEventListener('click', this.onStartGameBtnClick.bind(this));
     this.backgroundElements = this.ball.svgContainer.querySelectorAll('g')
     this.gameOver = false;
     this.currentBaulk = null;
     this.intervalId = null;
-
+    this.round = 1;
   }
 
   schedule(time) {
@@ -21,7 +24,7 @@ export class Game {
     });
   }
 
-  startBaulksAnimation(promise = this.schedule(0)) {
+  startBaulksAnimation(promise = this.schedule(0), round = this.round) {
     if(this.baulks.length === 0) {
       this.stop();
       return;
@@ -30,10 +33,12 @@ export class Game {
       return;
     }
     promise.then(() => {
-      this.currentBaulk = this.baulks.shift();
-      this.currentBaulk.animate();
-      !this.gameOver && this.showMessage(`Obstacles left: <strong>${this.baulks.length}</strong>`);
-      this.startBaulksAnimation(this.schedule(this.currentBaulk.animation.duration));
+      if(round === this.round) {
+        this.currentBaulk = this.baulks.shift();
+        this.currentBaulk.animate();
+        !this.gameOver && this.showMessage(`Obstacles left: <strong>${this.baulks.length}</strong>`);
+        this.startBaulksAnimation(this.schedule(this.currentBaulk.animation.duration));
+      }
     });
   }
   // СОЗДАТЬ ОТДЕЛЬНЫЙ КЛАСС ДЛЯ BACKGROUND 
@@ -51,6 +56,7 @@ export class Game {
   }
 
   start() {
+    console.log(`Round №${this.round}`);
     this.startBackgroundAnimation();
     this.startBaulksAnimation();
     this.startTrackingCoordinates();
@@ -60,7 +66,7 @@ export class Game {
     this.ball.svgContainer.style.transform = 'scale(0.5)';
     this.currentBaulk.domElement.style.display = 'none';
     this.baulks.forEach((baulk) => baulk.domElement.style.display = 'none');
-
+    this.stopTrackingCoordinates();
     const timerId = setTimeout(() => {  
       this.showMessage(this.getGameOverText());
       clearTimeout(timerId);
@@ -68,7 +74,7 @@ export class Game {
     
     this.stopBackgroundAnimation();
     setTimeout(() => {
-      this.showPlayAgainBtn();
+      this.show(this.playAgainBtn);
     }, 400);
     
   }
@@ -124,17 +130,20 @@ export class Game {
 
   stopTrackingCoordinates() {
     clearInterval(this.intervalId);
+    console.log('Cleaned!')
   }
 
   showPlayAgainBtn() {
     this.playAgainBtn.style.display = 'block';
     setTimeout(() => {
+      this.playAgainBtn.style.transform = 'translateX(0%)';
       this.playAgainBtn.style.opacity = '1';
     }, 200)
   }
 
   hidePlayAgainBtn() {
     this.playAgainBtn.style.opacity = '0';
+    this.playAgainBtn.style.transform = 'translateX(-30%)';
     setTimeout(() => {
       this.playAgainBtn.style.display = 'none';
     }, 200)
@@ -145,6 +154,41 @@ export class Game {
     this.gameOver = false;
     this.ball.svgContainer.style.transform = 'scale(1)';
     this.ball.domElement.setAttribute('fill', 'purple');
+    this.round++;
     this.start();
+    this.hide(this.playAgainBtn, 'left');
+  }
+
+  onStartGameBtnClick() {
+    this.baulks = generateBaulks(models, 10);
+    this.gameOver = false;
+    this.ball.svgContainer.style.transform = 'scale(1)';
+    this.ball.domElement.setAttribute('fill', 'purple');
+    this.round++;
+    this.start();
+    this.hide(this.startTheGameBtn, 'left');
+    this.show(this.messageContainer);
+  }
+
+  hide(element, transformDirection) {
+    element.blur();
+    element.style.opacity = '0.5';
+    if(transformDirection) {
+      const transformValue = transformDirection === 'right' ? '40%' : '-40%';
+      element.style.transform = `translateX(${transformValue})`;
+    }
+    element.style.opacity = '0';
+    setTimeout(() => {
+      element.style.display = 'none';
+    }, 400);
+  }
+
+  show(element) {
+    element.style.display = 'block';
+    setTimeout(() => {
+      element.style.opacity = '0.5';
+      element.style.transform = 'translateX(0%)';
+      element.style.opacity = '1';
+    }, 400);
   }
 }

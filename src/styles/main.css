@@ -139,23 +139,30 @@
   }
 }
 
-body {
-  background: rgba(0, 238, 255, 0.377);
+body, button {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 3vh;
+}
+
+body {
+  background: rgba(0, 238, 255, 0.377);
   display: flex;
   justify-content: space-around;
   flex-flow: column nowrap;
+  margin: 0;
+  padding: 0;
 }
 
 header {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
 }
 
 header h1 {
   text-align: center;
+  margin: 2% auto;
 }
 
 main {
@@ -164,13 +171,14 @@ main {
   flex-flow: column nowrap;
   align-items: center;
   position: relative;
+  transition: 0.6s ease-in-out all;
 }
 
 svg {
   background: linear-gradient(to bottom, rgb(62, 164, 233) 46% , rgb(68, 184, 68) 47%, rgb(81, 187, 81) 68%, rgb(172, 164, 64) 70%);
   border: 2px solid lightgray;
-  width: max-content;
   transition: 0.3s ease-in-out all;
+  transform: scale(0.5);
 }
 
 .ball {
@@ -307,25 +315,29 @@ svg {
   padding: 2% 10%;
   box-shadow: 0 0 1vh 1vh hsl(120, 83%, 46%, 0.5);
   white-space: nowrap;
-  transition: 0.3s ease-in-out all;
+  transition: 0.6s ease-in all;
 }
-
 
 footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: .2s ease-in width;
-  margin-top: 5%;
+  transition: .6s ease-in width;
+  font-size: 3vh;
 }
 
 #message-container {
-  display: inline-block;
-  margin: 6% 1%;
+  display: none;
+  transform: translateX(40%);
+}
+
+#start-the-game-btn {
+  display: block;
 }
 
 #play-again-btn {
   display: none;
-  font-size: 3vh;
   opacity: 0;
+  transform: translateX(-40%);
+  margin-left: 1%;
 }
