@@ -143,13 +143,27 @@ body {
   background: rgba(0, 238, 255, 0.377);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 3vh;
-}
-
-#root {
   display: flex;
   justify-content: space-around;
   flex-flow: column nowrap;
+}
+
+header {
+  display: flex;
+  justify-content: center;
   align-items: center;
+}
+
+header h1 {
+  text-align: center;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+  position: relative;
 }
 
 svg {
@@ -182,7 +196,6 @@ svg {
   animation-duration: 5s;
   animation-direction: normal;
   animation-iteration-count: infinite;
-  
   animation-fill-mode: forwards;
 }
 
@@ -212,6 +225,7 @@ svg {
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
+
 .baulk.ghost {
   animation-name: baulk-move-ghost;
   animation-duration: 6s;
@@ -222,16 +236,14 @@ svg {
 }
 
 #road-lines-group {
-  transform: skewX(-15deg)
-}
-
-#road-lines-group.move {
+  transform: skewX(-15deg);
   animation-name: road-line-move;
   animation-duration: 5s;
   animation-direction: alternate-reverse;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
+  animation-play-state: paused;
 }
 
 .sun-beam {
@@ -245,6 +257,7 @@ svg {
   animation-iteration-count: infinite;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
+  animation-play-state: paused;
 }
 
 #sun {
@@ -254,6 +267,7 @@ svg {
   animation-iteration-count: infinite;
   animation-timing-function: ease-in;
   animation-fill-mode: both;
+  animation-play-state: paused;
 }
 
 #clouds {
@@ -263,6 +277,7 @@ svg {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   animation-fill-mode: both;
+  animation-play-state: paused;
 }
 
 #grass {
@@ -272,6 +287,7 @@ svg {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   animation-fill-mode: both;
+  animation-play-state: paused;
 }
 
 #trees {
@@ -281,22 +297,35 @@ svg {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   animation-fill-mode: both;
+  animation-play-state: paused;
 }
 
-.text-wrapper {
+.common-style {
   border-radius: 5vh;
   background: white;
   border: 2px solid green;
-  padding: 1% 2%;
+  padding: 2% 10%;
   box-shadow: 0 0 1vh 1vh hsl(120, 83%, 46%, 0.5);
-}
-
-#end-game-message {
-  display: none;
-  transition: 0.5s ease-in-out all;
-}
-
-#baulk-counter {
-  margin: 4% 1%;
+  white-space: nowrap;
   transition: 0.3s ease-in-out all;
+}
+
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .2s ease-in width;
+  margin-top: 5%;
+}
+
+#message-container {
+  display: inline-block;
+  margin: 6% 1%;
+}
+
+#play-again-btn {
+  display: none;
+  font-size: 3vh;
+  opacity: 0;
 }

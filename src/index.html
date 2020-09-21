@@ -6,11 +6,14 @@
   <title>Jumping Ball Game</title>
 </head>
 <body>
-  <div id="root">
-    <h1 class="text-wrapper">Jump for your life!</h1>
-    <p id="end-game-message" class="text-wrapper"></p>
+  <header>
+    <h1 class="common-style">Jump for your life!</h1>
+  </header>
+  <main>
     <svg id="svg-box" width="500" height="500" viewBox="0 0 500 500">
-      <circle id="sun" r="10%" cx="95%" cy="5%" fill="yellow"/>
+      <g id="sun">
+        <circle  r="10%" cx="95%" cy="5%" fill="yellow"/>
+      </g>
       <g id="sun-beams-group">
         <line x1="70%" y1="5%" x2="80%" y2="5%" stroke="yellow" stroke-width="0.5%" class="sun-beam"/>
         <line x1="75%" y1="25%" x2="85%" y2="15%" stroke="yellow" stroke-width="0.5%" class="sun-beam"/>
@@ -36,7 +39,7 @@
         <ellipse rx="35" ry="55" cx="-340" cy="200" fill="green"/>
         <polygon points="-320,280 -360,280 -340,220" fill="brown"/>
       </g>
-      <g id="road-lines-group" class="move">
+      <g id="road-lines-group">
         <line x1="10%" y1="95%" x2="10%" y2="75%" stroke="gray" stroke-width="0.5%" class="road-line"/>
         <line x1="20%" y1="96%" x2="20%" y2="76%" stroke="gray" stroke-width="0.5%" class="road-line"/>
         <line x1="30%" y1="95%" x2="30%" y2="75%" stroke="gray" stroke-width="0.5%" class="road-line"/>
@@ -52,7 +55,11 @@
       </g>
       <circle r="5%" cx="80%" cy="80%" fill="purple" class="ball"/>
     </svg>
-    <p id="baulk-counter" class="text-wrapper">Obstacles left: <strong>1</strong></p>
-  </div>
+    <footer>
+      <p id="message-container" class="common-style"></p>
+      <button name="play-again" id="play-again-btn" class="common-style">Play again</button>
+    </footer>
+    
+  </main>
 </body>
 </html>

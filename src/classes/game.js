@@ -1,14 +1,18 @@
-import { isDotInRange } from '../utils';
+import { generateBaulks, isDotInRange } from '../utils';
+import { models } from '../models';
 
 export class Game {
   constructor(ball, baulks) {
     this.ball = ball;
     this.baulks = baulks;
-    this.baulkCounter = document.querySelector('#baulk-counter');
-    this.endGameMessageContainer = document.querySelector('#end-game-message');
+    this.messageContainer = document.querySelector('#message-container');
+    this.playAgainBtn = document.querySelector('#play-again-btn');
+    this.playAgainBtn.addEventListener('click', this.onPlayAgainBtnClick.bind(this));
+    this.backgroundElements = this.ball.svgContainer.querySelectorAll('g')
     this.gameOver = false;
     this.currentBaulk = null;
     this.intervalId = null;
+
   }
 
   schedule(time) {
@@ -17,7 +21,7 @@ export class Game {
     });
   }
 
-  startAnimation(promise = this.schedule(0)) {
+  startBaulksAnimation(promise = this.schedule(0)) {
     if(this.baulks.length === 0) {
       this.stop();
       return;
@@ -28,37 +32,56 @@ export class Game {
     promise.then(() => {
       this.currentBaulk = this.baulks.shift();
       this.currentBaulk.animate();
-      this.baulkCounter.innerHTML = `Obstacles left: <strong>${this.baulks.length}</strong>`;
-      this.startAnimation(this.schedule(this.currentBaulk.animation.duration));
-    })
+      !this.gameOver && this.showMessage(`Obstacles left: <strong>${this.baulks.length}</strong>`);
+      this.startBaulksAnimation(this.schedule(this.currentBaulk.animation.duration));
+    });
+  }
+  // СОЗДАТЬ ОТДЕЛЬНЫЙ КЛАСС ДЛЯ BACKGROUND 
+  // и вынести методы для управления анимацией этих фигур в этот класс
+  startBackgroundAnimation() {
+    this.ball.svgContainer.querySelectorAll('g').forEach((g) => {
+      g.style.animationPlayState = 'running';
+    });
+  }
+
+  stopBackgroundAnimation() {
+    this.ball.svgContainer.querySelectorAll('g').forEach((g) => {
+      g.style.animationPlayState = 'paused';
+    });
   }
 
   start() {
-    this.startAnimation();
-    this.showCoordinates();
+    this.startBackgroundAnimation();
+    this.startBaulksAnimation();
+    this.startTrackingCoordinates();
   }
 
   stop() {
-    this.ball.svgContainer.style.opacity = '0';
-    this.baulkCounter.style.opacity = '0';
-    const timerId = setTimeout(() => {
-      this.ball.svgContainer.style.display = 'none';
-      this.baulkCounter.style.display = 'none;'
-      this.showMessage();
+    this.ball.svgContainer.style.transform = 'scale(0.5)';
+    this.currentBaulk.domElement.style.display = 'none';
+    this.baulks.forEach((baulk) => baulk.domElement.style.display = 'none');
+
+    const timerId = setTimeout(() => {  
+      this.showMessage(this.getGameOverText());
       clearTimeout(timerId);
-    }, 400)
-    clearInterval(this.intervalId);
+    }, 400);
+    
+    this.stopBackgroundAnimation();
+    setTimeout(() => {
+      this.showPlayAgainBtn();
+    }, 400);
+    
   }
 
-  showMessage() {
-    this.baulks.length === 0 ? 
-      this.endGameMessageContainer.textContent = 'Congratulations! You win!' :
-      this.endGameMessageContainer.textContent = 'Ooops, you lose :(';
-    this.endGameMessageContainer.style.display = 'inline';
-    this.endGameMessageContainer.style.opacity = '1';
-    this.endGameMessageContainer.style.transform = 'translateY(50%)';
+  showMessage(message) {
+    this.messageContainer.innerHTML = message;
   }
 
+  getGameOverText() {
+    return this.baulks.length === 0 ? 'Congratulations! You win!' : 'Ooops, you lose :(';
+  }
+
+  // ПЕРЕНЕСТИ В КЛАСС BALL
   getBallCoordinates() {
     const ballRect = this.ball.domElement.getBoundingClientRect();
     const { x, y, width, height } = ballRect;
@@ -84,10 +107,10 @@ export class Game {
       y: baulkRect.y - svgRectTop, 
       width: baulkRect.width, 
       height: baulkRect.height
-    }
+    };
   }
 
-  showCoordinates() {
+  startTrackingCoordinates() {
     this.intervalId = setInterval(() => {
       const ball = this.getBallCoordinates();
       const baulk = this.getCurrentBaulkCoordinates();
@@ -96,6 +119,32 @@ export class Game {
         this.gameOver = true;
         this.stop();
       }
-    }, 100)
+    }, 100);
+  }
+
+  stopTrackingCoordinates() {
+    clearInterval(this.intervalId);
+  }
+
+  showPlayAgainBtn() {
+    this.playAgainBtn.style.display = 'block';
+    setTimeout(() => {
+      this.playAgainBtn.style.opacity = '1';
+    }, 200)
+  }
+
+  hidePlayAgainBtn() {
+    this.playAgainBtn.style.opacity = '0';
+    setTimeout(() => {
+      this.playAgainBtn.style.display = 'none';
+    }, 200)
+  }
+
+  onPlayAgainBtnClick() {
+    this.baulks = generateBaulks(models, 10);
+    this.gameOver = false;
+    this.ball.svgContainer.style.transform = 'scale(1)';
+    this.ball.domElement.setAttribute('fill', 'purple');
+    this.start();
   }
 }

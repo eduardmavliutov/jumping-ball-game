@@ -8,14 +8,17 @@ export class Ball extends SvgFigure {
     this.init();
   }
 
-  init() {
-    this.svgContainer.addEventListener('click', (event) => {
-      const point = event.pageX - this.svgRect.left;
-      this.domElement.setAttribute('cx', `${point}px`);
-      this.domElement.classList.add('jump');
-      setTimeout(() => {
-        this.domElement.classList.remove('jump');
-      }, 500)
-    });
+  onSvgContainerClick(event) {
+    const point = event.pageX - this.svgRect.left;
+    this.domElement.setAttribute('cx', `${point}px`);
+    this.domElement.classList.add('jump');
+    setTimeout(() => {
+      this.domElement.classList.remove('jump');
+    }, 500)
   }
+
+  init() {
+    this.svgContainer.addEventListener('click', this.onSvgContainerClick.bind(this));
+  }
+  
 }
