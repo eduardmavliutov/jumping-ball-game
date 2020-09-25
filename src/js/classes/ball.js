@@ -35,5 +35,13 @@ export class Ball {
       };
     });
   }
+
+  resetPosition() {
+    this.domElement.setAttribute('cx', '80%');
+    this.domElement.setAttribute('cy', '80%');
+  }
   
+  resetColor() {
+    this.domElement.setAttribute('fill', 'purple');
+  }
 }

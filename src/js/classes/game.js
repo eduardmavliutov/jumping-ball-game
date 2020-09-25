@@ -53,9 +53,11 @@ export class Game {
     this.baulks = generateBaulks(models, 10, this.svgContainer, this.svgRect);
     this.gameOver = false;
     this.svgContainer.style.transform = 'scale(1)';
-    this.ball.domElement.setAttribute('fill', 'purple');
+    this.ball.resetColor();
+    this.ball.resetPosition();
     this.round++;
     this.hide(this.startTheGameBtn, 'left');
+    this.background.resetPosition();
     this.background.startAnimation();
     this.startBaulksAnimation();
     this.startTrackingCoordinates();

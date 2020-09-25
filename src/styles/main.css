@@ -155,14 +155,14 @@ body {
 
 header {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  margin: 0;
+  flex-flow: column nowrap;
+  flex-shrink: 2;
 }
 
 header h1 {
-  text-align: center;
-  margin: 2% auto;
+  margin-bottom: 0;
 }
 
 main {
@@ -179,6 +179,17 @@ svg {
   border: 2px solid lightgray;
   transition: 0.3s ease-in-out all;
   transform: scale(0.5);
+  flex-grow: 2;
+}
+
+.wrapper {
+  border-radius: 5vh;
+  background: white;
+  border: 2px solid green;
+  padding: 1% 10%;
+  box-shadow: 0 0 1vh 1vh hsl(120, 83%, 46%, 0.5);
+  white-space: nowrap;
+  transition: 0.6s ease-in all;
 }
 
 .ball {
@@ -308,15 +319,7 @@ svg {
   animation-play-state: paused;
 }
 
-.common-style {
-  border-radius: 5vh;
-  background: white;
-  border: 2px solid green;
-  padding: 2% 10%;
-  box-shadow: 0 0 1vh 1vh hsl(120, 83%, 46%, 0.5);
-  white-space: nowrap;
-  transition: 0.6s ease-in all;
-}
+
 
 footer {
   display: flex;
@@ -341,3 +344,19 @@ footer {
   transform: translateX(-40%);
   margin-left: 1%;
 }
+
+#start-the-game-btn:hover,
+#play-again-btn:hover  {
+  box-shadow: 0 0 1vh 1vh rgba(208, 20, 215, 0.5);
+}
+
+#start-the-game-btn:active,
+#play-again-btn:active  {
+  box-shadow: 0 0 1vh 1vh rgba(208, 20, 215, 0.5),
+              inset 1vh 1vh 1vh 1vh rgba(208, 20, 215, 0.5),;
+  background: lightblue;
+  color: gray;
+}
+
+
+

@@ -1,12 +1,10 @@
 export class Baulk {
   constructor(animation, svgContainer, svgRect) {
-  
     this.animation = animation;
     this.svgContainer = svgContainer;
     this.svgRect = svgRect;
     this.id = Math.random().toFixed(3) * 1000 + 'baulk';
     this.domElement = this.createElement();
-    console.log(`Baulk svg rect: ${JSON.stringify(this.svgRect)}`)
   }
 
   createElement() {
