@@ -1,9 +1,4 @@
 import './styles/main.css';
-import { Game } from './classes/game';
-import { generateBaulks } from './utils';
-import { models } from './models';
+import { Game } from './js/classes/game';
 
 const game = new Game();
-// game.start();
-
-

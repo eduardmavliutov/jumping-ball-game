@@ -13,13 +13,13 @@ import { Baulk } from './classes/baulk';
   return x >= xRange.from && x <= xRange.to && y >=yRange.from && y <= yRange.to;
 }
 
-export const generateBaulks = (models, neededAmount = model.length) => {
+export const generateBaulks = (models, neededAmount = model.length, svgContainer, svgRect) => {
   if (neededAmount === models.length) {
     return models.map((model) => new Baulk(model));
   } 
   const baulks = new Array(neededAmount);
   for (let i = 0; i < baulks.length; i++) {
-    baulks[i] = new Baulk(getRandomArrayElement(models))
+    baulks[i] = new Baulk(getRandomArrayElement(models), svgContainer, svgRect)
   }
   return baulks;
 }

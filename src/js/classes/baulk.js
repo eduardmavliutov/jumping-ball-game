@@ -1,11 +1,12 @@
-import { SvgFigure } from './svgfigure';
-
-export class Baulk extends SvgFigure {
-  constructor(animation) {
-    super();
+export class Baulk {
+  constructor(animation, svgContainer, svgRect) {
+  
     this.animation = animation;
+    this.svgContainer = svgContainer;
+    this.svgRect = svgRect;
     this.id = Math.random().toFixed(3) * 1000 + 'baulk';
     this.domElement = this.createElement();
+    console.log(`Baulk svg rect: ${JSON.stringify(this.svgRect)}`)
   }
 
   createElement() {
@@ -28,5 +29,16 @@ export class Baulk extends SvgFigure {
       baulkElement.classList.remove(this.animation.name);
       this.svgContainer.removeChild(baulkElement);
     }, this.animation.duration);
+  }
+
+  getCoordinates() {
+    const baulkRect = this.domElement.getBoundingClientRect();
+    const { left: svgRectLeft, top: svgRectTop } = this.svgRect;
+    return {
+      x: baulkRect.x - svgRectLeft,
+      y: baulkRect.y - svgRectTop, 
+      width: baulkRect.width, 
+      height: baulkRect.height
+    };
   }
 }

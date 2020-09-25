@@ -1,7 +1,7 @@
 export const models = [
   {
     name: 'straight',
-    duration: 3000
+    duration: 4000
   },
    {
     name: 'chaos',

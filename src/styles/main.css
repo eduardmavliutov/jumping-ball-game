@@ -11,10 +11,10 @@
 }
 
 @keyframes baulk-move-chaos {
-  25% {
+  20% {
     transform: translateY(25%) rotate(90deg);
   }
-  50% {
+  30% {
     transform: translateX(50%) rotate(180deg);
   }
   50% {
@@ -196,7 +196,6 @@ svg {
 
 .baulk {
   transition: .3s all ease-in;
-  transform-box: view-box;
 }
 
 .baulk.chaos {
@@ -204,12 +203,13 @@ svg {
   animation-duration: 5s;
   animation-direction: normal;
   animation-iteration-count: infinite;
+  animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
 
 .baulk.straight {
   animation-name: baulk-move-straight;
-  animation-duration: 5s;
+  animation-duration: 4s;
   animation-direction: normal;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in;
